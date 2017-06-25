@@ -17,7 +17,7 @@ public class ChatMain {
         CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
         ChatParser parser = new ChatParser(commonTokenStream);
         parser.setBuildParseTree(true);
-        ChatParser.RContext tree = parser.r();
+        ChatParser.SingleExpressionContext tree = parser.singleExpression();
 
         ChatimplList listener = new ChatimplList();
         ParseTreeWalker.DEFAULT.walk(listener, tree);
