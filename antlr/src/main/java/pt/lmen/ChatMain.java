@@ -19,7 +19,7 @@ public class ChatMain {
         parser.setBuildParseTree(true);
         ChatParser.SingleExpressionContext tree = parser.singleExpression();
 
-        ChatimplList listener = new ChatimplList();
+        ChatimplList listener = new ChatimplList(commonTokenStream);
         ParseTreeWalker.DEFAULT.walk(listener, tree);
 
     }
