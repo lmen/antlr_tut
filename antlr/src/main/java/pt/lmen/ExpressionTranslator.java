@@ -6,7 +6,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import src.main.antlr4.pt.lmen.ChatLexer;
 import src.main.antlr4.pt.lmen.ChatParser;
-import src.main.antlr4.pt.lmen.ChatParser.ExpressionStatementContext;
+import src.main.antlr4.pt.lmen.ChatParser.SingleExpressionContext;
 
 public class ExpressionTranslator {
 
@@ -17,7 +17,7 @@ public class ExpressionTranslator {
         ChatLexer lexer = new ChatLexer( input );
         CommonTokenStream tokens = new CommonTokenStream( lexer );
         ChatParser parser = new ChatParser( tokens );
-        ExpressionStatementContext tree = parser.expressionStatement();
+        SingleExpressionContext tree = parser.singleExpression();
 
         ParseTreeWalker walker = new ParseTreeWalker();
         ChatimplList listener = new ChatimplList( tokens );

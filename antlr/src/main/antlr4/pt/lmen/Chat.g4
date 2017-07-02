@@ -1,75 +1,6 @@
 grammar Chat;
 
 
-/// ExpressionStatement :
-///     [lookahead ∉ {{, function}] Expression ;
- ///: {(_input.LA(1) != OpenBrace) && (_input.LA(1) != Function)}? expressionSequence eos
-expressionStatement
- : singleExpression
- ;
-
-    
-/// ArrayLiteral :
-///     [ Elision? ]
-///     [ ElementList ]
-///     [ ElementList , Elision? ]
-arrayLiteral
- : '[' elementList? ','? elision? ']'
- ;
-
-/// ElementList :
-///     Elision? AssignmentExpression
-///     ElementList , Elision? AssignmentExpression
-elementList
- : elision? singleExpression ( ',' elision? singleExpression )*
- ;
-
-/// Elision :
-///     ,
-///     Elision ,
-elision
- : ','+
- ;
-
-/// ObjectLiteral :
-///     { }
-///     { PropertyNameAndValueList }
-///     { PropertyNameAndValueList , }
-objectLiteral
- : '{' '}'
- | '{' propertyNameAndValueList ','? '}'
- ;
-
-/// PropertyNameAndValueList :
-///     PropertyAssignment
-///     PropertyNameAndValueList , PropertyAssignment
-propertyNameAndValueList
- : propertyAssignment ( ',' propertyAssignment )*
- ;
-    
-/// PropertyAssignment :
-///     PropertyName : AssignmentExpression
-///     get PropertyName ( ) { FunctionBody }
-///     set PropertyName ( PropertySetParameterList ) { FunctionBody }
-propertyAssignment
- : propertyName ':' singleExpression                            # PropertyExpressionAssignment
- ;           
-    
-/// PropertyName :
-///     IdentifierName
-///     StringLiteral
-///     NumericLiteral
-propertyName
- : identifierName
- | StringLiteral
- | numericLiteral
- ;
-    
-/// PropertySetParameterList :
-///     Identifier
-propertySetParameterList
- : Identifier
- ;
 
 /// Arguments :
 ///     ( )
@@ -86,15 +17,12 @@ argumentList
  ;
     
 
-expressionSequence
- : singleExpression ( ',' singleExpression )*
- ;
-
 singleExpression
  : 
-   singleExpression '[' expressionSequence ']'                            # MemberIndexExpression
- ///| singleExpression '.' identifierName                                    # MemberDotExpression
- ///|  singleExpression arguments                                             # ArgumentsExpression
+   singleExpression '[' singleExpression ']'                            # MemberIndexExpression
+   
+ //| singleExpression '.' identifierName                                    # MemberDotExpression
+ |  singleExpression arguments                                             # ArgumentsExpression
  | '!' singleExpression                                                   # NotExpression
  | singleExpression ( '*' | '/' | '%' ) singleExpression                  # MultiplicativeExpression
  | singleExpression ( '+' | '-' ) singleExpression                        # AdditiveExpression
@@ -107,14 +35,13 @@ singleExpression
  | singleExpression '&&' singleExpression                                 # LogicalAndExpression
  | singleExpression '||' singleExpression                                 # LogicalOrExpression
  | singleExpression '?' singleExpression ':' singleExpression             # TernaryExpression
- //| This                                                                   # ThisExpression
- | identifierName                                                         # IdentifierNameExpression
+ | identifierName ( SUBPROP identifierName2 )?                 # IdentifierNameAccessPropExpression
+ ///| identifierName                                                       # IdentifierNameExpression
  | literal                                                                # LiteralExpression
- ///| arrayLiteral                                                           # ArrayLiteralExpression
- ///| objectLiteral                                                          # ObjectLiteralExpression
  | '(' singleExpression ')'                                             # ParenthesizedExpression
  ;
 
+SUBPROP :'::';
 
 literal
  : ( NullLiteral 
@@ -131,9 +58,15 @@ numericLiteral
  | OctalIntegerLiteral
  ;
 
+identifierName2
+ :  
+ IdentifierWithDot
+ ;
+
 identifierName
- : IdentifierWithDot
-  ///Identifier ('.' Identifier )* 
+ : //Identifier 
+ IdentifierWithDot
+  ///Identifier ('.' Identifier )*? 
  ///| reservedWord
  ;
 
@@ -208,7 +141,11 @@ eof
 // =======
 
 IdentifierWithDot : 
-	Identifier ('.' Identifier )*;
+	//Identifier (TSEP  Identifier )*;
+	Identifier ('.'  Identifier )*;
+	
+TSEP :
+  '.' | '::';	
 
 /// RegularExpressionLiteral ::
 ///     / RegularExpressionBody / RegularExpressionFlags

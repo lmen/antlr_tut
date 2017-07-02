@@ -1,0 +1,10 @@
+cd C:\dev\git_repos\antlr_tut\antlr\src\main\antlr4\pt\lmen
+set CLASSPATH=.;C:\dev\git_repos\antlr_tut\antlr\src\main\antlr4\pt\lmen\antrlr-4.7-complete.jar
+
+doskey antlr4=java org.antlr.v4.Tool Chat.g4 $*
+doskey grun =java org.antlr.v4.gui.TestRig Chat $*
+doskey jc=C:\dev\jdk1.8.0_121\bin\javac Chat*.java
+
+antlr4 
+jc
+grun  singleExpression -gui
