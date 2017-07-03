@@ -20,23 +20,14 @@ public class ExpressionListener extends ChatBaseListener {
 	public void enterPropertyPathExpression(PropertyPathExpressionContext ctx) {
 
 		PropertyPathContext propertyPathCtx = ctx.propertyPath();
-		if (!iskeyWord(propertyPathCtx.getText())) {
-			rewriter.insertBefore(propertyPathCtx.start, "_$_M('");
-			rewriter.insertAfter(propertyPathCtx.start, "')");
-		}
+		rewriter.insertBefore(propertyPathCtx.start, "_$_M('");
+		rewriter.insertAfter(propertyPathCtx.start, "')");
 
-		TerminalNode subprop = ctx.SUBPROP();
+		TerminalNode subprop = ctx.JavaSectionSeparator();
 		if (subprop != null) {
 			rewriter.replace(subprop.getSymbol(), ".");
 		}
 
-	}
-
-	private boolean iskeyWord(String text) {
-		return false;
-		// String[] keywords = { "null", "true", "false", "undefined", "while",
-		// "for" };
-		// return Arrays.asList(keywords).contains(text);
 	}
 
 }

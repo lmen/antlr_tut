@@ -7,13 +7,13 @@ grammar Chat;
 singleExpression
  : 
    singleExpression '[' singleExpression ']'                            # MemberIndexExpression
- |  singleExpression arguments                                             # ArgumentsExpression
+ | singleExpression arguments                                             # ArgumentsExpression
  | '!' singleExpression                                                   # NotExpression
  | singleExpression ( '*' | '/' | '%' ) singleExpression                  # MultiplicativeExpression
  | singleExpression ( '+' | '-' ) singleExpression                        # AdditiveExpression
  | singleExpression ( '<<' | '>>' | '>>>' ) singleExpression              # BitShiftExpression
  | singleExpression ( '<' | '>' | '<=' | '>=' ) singleExpression          # RelationalExpression 
- | singleExpression ( Equals | '!=' | '===' | '!==' ) singleExpression      # EqualityExpression
+ | singleExpression ( Equals | '!=' | '===' | '!==' ) singleExpression    # EqualityExpression
  | singleExpression '&' singleExpression                                  # BitAndExpression
  | singleExpression '^' singleExpression                                  # BitXOrExpression
  | singleExpression '|' singleExpression                                  # BitOrExpression
@@ -21,9 +21,9 @@ singleExpression
  | singleExpression '||' singleExpression                                 # LogicalOrExpression
  | singleExpression '?' singleExpression ':' singleExpression             # TernaryExpression
  | reservedWord															  # ReservedWordExpression // JUST REMOVES THE KEYWORKS TOKENS FROM THE IDENTIFIERS SCOPE 
- | propertyPath ( SUBPROP javaPath )?                					 # PropertyPathExpression
+ | propertyPath ( JavaSectionSeparator javaPath )?                		  # PropertyPathExpression
  | literal                                                                # LiteralExpression
- | '(' singleExpression ')'                                              # ParenthesizedExpression
+ | '(' singleExpression ')'                                               # ParenthesizedExpression
  ;
 
 arguments
@@ -121,7 +121,7 @@ futureReservedWord
 // LEXER
 // =======
 
-SUBPROP :'::';		
+JavaSectionSeparator :'::';		
 
 /// RegularExpressionLiteral ::
 ///     / RegularExpressionBody / RegularExpressionFlags
