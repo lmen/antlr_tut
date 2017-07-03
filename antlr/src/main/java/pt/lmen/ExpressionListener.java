@@ -10,17 +10,19 @@ import src.main.antlr4.pt.lmen.ExpressionParser.PropertyPathExpressionContext;
 
 public class ExpressionListener extends ExpressionBaseListener {
 
-	TokenStreamRewriter rewriter;
+	private TokenStreamRewriter rewriter;
+	private String contextFunctionName;
 
-	public ExpressionListener(TokenStream tokens) {
-		rewriter = new TokenStreamRewriter(tokens);
+	public ExpressionListener(TokenStream tokens, String contextFunctionName) {
+		this.rewriter = new TokenStreamRewriter(tokens);
+		this.contextFunctionName = contextFunctionName;
 	}
 
 	@Override
 	public void enterPropertyPathExpression(PropertyPathExpressionContext ctx) {
 
 		PropertyPathContext propertyPathCtx = ctx.propertyPath();
-		rewriter.insertBefore(propertyPathCtx.start, "_$_M('");
+		rewriter.insertBefore(propertyPathCtx.start, contextFunctionName + "('");
 		rewriter.insertAfter(propertyPathCtx.start, "')");
 
 		TerminalNode subprop = ctx.JavaSectionSeparator();
@@ -28,6 +30,10 @@ public class ExpressionListener extends ExpressionBaseListener {
 			rewriter.replace(subprop.getSymbol(), ".");
 		}
 
+	}
+
+	public String getTranslatedText() {
+		return rewriter.getText();
 	}
 
 }

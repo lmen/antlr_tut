@@ -20,10 +20,10 @@ public class ExpressionTranslator {
 		SingleExpressionContext tree = parser.singleExpression();
 
 		ParseTreeWalker walker = new ParseTreeWalker();
-		ExpressionListener listener = new ExpressionListener(tokens);
+		ExpressionListener listener = new ExpressionListener(tokens, "_$_M");
 		walker.walk(listener, tree);
 
-		return listener.rewriter.getText();
+		return listener.getTranslatedText();
 
 	}
 
