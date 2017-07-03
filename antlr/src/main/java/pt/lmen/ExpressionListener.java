@@ -10,11 +10,11 @@ import src.main.antlr4.pt.lmen.ChatBaseListener;
 import src.main.antlr4.pt.lmen.ChatParser.PropertyPathContext;
 import src.main.antlr4.pt.lmen.ChatParser.PropertyPathExpressionContext;
 
-public class ChatimplList extends ChatBaseListener {
+public class ExpressionListener extends ChatBaseListener {
 
 	TokenStreamRewriter rewriter;
 
-	public ChatimplList(TokenStream tokens) {
+	public ExpressionListener(TokenStream tokens) {
 		rewriter = new TokenStreamRewriter(tokens);
 	}
 

@@ -20,7 +20,7 @@ public class ExpressionTranslator {
         SingleExpressionContext tree = parser.singleExpression();
 
         ParseTreeWalker walker = new ParseTreeWalker();
-        ChatimplList listener = new ChatimplList( tokens );
+        ExpressionListener listener = new ExpressionListener( tokens );
         walker.walk( listener, tree );
 
         return listener.rewriter.getText();
