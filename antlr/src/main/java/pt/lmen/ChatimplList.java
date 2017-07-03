@@ -7,7 +7,8 @@ import org.antlr.v4.runtime.TokenStreamRewriter;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import src.main.antlr4.pt.lmen.ChatBaseListener;
-import src.main.antlr4.pt.lmen.ChatParser.IdentifierNameAccessPropExpressionContext;
+import src.main.antlr4.pt.lmen.ChatParser.PropertyPathContext;
+import src.main.antlr4.pt.lmen.ChatParser.PropertyPathExpressionContext;
 
 public class ChatimplList extends ChatBaseListener {
 
@@ -18,11 +19,12 @@ public class ChatimplList extends ChatBaseListener {
 	}
 
 	@Override
-	public void enterIdentifierNameAccessPropExpression(IdentifierNameAccessPropExpressionContext ctx) {
+	public void enterPropertyPathExpression(PropertyPathExpressionContext ctx) {
 
-		if (!iskeyWord(ctx.identifierName().getText())) {
-			rewriter.insertBefore(ctx.identifierName().start, "_$_M('");
-			rewriter.insertAfter(ctx.identifierName().start, "')");
+		PropertyPathContext propertyPathCtx = ctx.propertyPath();
+		if (!iskeyWord(propertyPathCtx.getText())) {
+			rewriter.insertBefore(propertyPathCtx.start, "_$_M('");
+			rewriter.insertAfter(propertyPathCtx.start, "')");
 		}
 
 		TerminalNode subprop = ctx.SUBPROP();
@@ -30,9 +32,6 @@ public class ChatimplList extends ChatBaseListener {
 			rewriter.replace(subprop.getSymbol(), ".");
 		}
 
-		if (ctx.identifierName2() != null) {
-
-		}
 	}
 
 	private boolean iskeyWord(String text) {

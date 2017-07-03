@@ -1,27 +1,12 @@
 grammar Chat;
 
-
-
-/// Arguments :
-///     ( )
-///     ( ArgumentList )
-arguments
- : '(' argumentList? ')'
- ;
-    
-/// ArgumentList :
-///     AssignmentExpression
-///     ArgumentList , AssignmentExpression
-argumentList
- : singleExpression ( ',' singleExpression )*
- ;
-    
+// =============
+// Parser rules start with a lowercase
+// ==============
 
 singleExpression
  : 
    singleExpression '[' singleExpression ']'                            # MemberIndexExpression
-   
- //| singleExpression '.' identifierName                                    # MemberDotExpression
  |  singleExpression arguments                                             # ArgumentsExpression
  | '!' singleExpression                                                   # NotExpression
  | singleExpression ( '*' | '/' | '%' ) singleExpression                  # MultiplicativeExpression
@@ -35,13 +20,20 @@ singleExpression
  | singleExpression '&&' singleExpression                                 # LogicalAndExpression
  | singleExpression '||' singleExpression                                 # LogicalOrExpression
  | singleExpression '?' singleExpression ':' singleExpression             # TernaryExpression
- | identifierName ( SUBPROP identifierName2 )?                 # IdentifierNameAccessPropExpression
- ///| identifierName                                                       # IdentifierNameExpression
+ | propertyPath ( SUBPROP javaPath )?                					 # PropertyPathExpression
  | literal                                                                # LiteralExpression
  | '(' singleExpression ')'                                             # ParenthesizedExpression
  ;
 
-SUBPROP :'::';
+arguments
+ : '(' argumentList? ')'
+ ;
+    
+
+argumentList
+ : singleExpression ( ',' singleExpression )*
+ ;
+
 
 literal
  : ( NullLiteral 
@@ -58,16 +50,12 @@ numericLiteral
  | OctalIntegerLiteral
  ;
 
-identifierName2
- :  
- IdentifierWithDot
+javaPath
+ :  IdentifierWithDot  
  ;
 
-identifierName
- : //Identifier 
- IdentifierWithDot
-  ///Identifier ('.' Identifier )*? 
- ///| reservedWord
+propertyPath
+ :  IdentifierWithDot  
  ;
 
 reservedWord
@@ -127,18 +115,11 @@ futureReservedWord
  ;
 
 
-eos
- : SemiColon
- | EOF
- ;
-
-eof
- : EOF
- ;
-
 // =======  
 // LEXER
 // =======
+
+SUBPROP :'::';
 
 IdentifierWithDot : 
 	//Identifier (TSEP  Identifier )*;
