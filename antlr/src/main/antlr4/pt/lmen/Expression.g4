@@ -1,4 +1,4 @@
-grammar Chat;
+grammar Expression;
 
 // =============
 // Parser rules start with a lowercase

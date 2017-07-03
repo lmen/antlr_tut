@@ -4,11 +4,11 @@ import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.TokenStreamRewriter;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import src.main.antlr4.pt.lmen.ChatBaseListener;
-import src.main.antlr4.pt.lmen.ChatParser.PropertyPathContext;
-import src.main.antlr4.pt.lmen.ChatParser.PropertyPathExpressionContext;
+import src.main.antlr4.pt.lmen.ExpressionBaseListener;
+import src.main.antlr4.pt.lmen.ExpressionParser.PropertyPathContext;
+import src.main.antlr4.pt.lmen.ExpressionParser.PropertyPathExpressionContext;
 
-public class ExpressionListener extends ChatBaseListener {
+public class ExpressionListener extends ExpressionBaseListener {
 
 	TokenStreamRewriter rewriter;
 
