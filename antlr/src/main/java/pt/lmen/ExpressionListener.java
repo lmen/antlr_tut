@@ -1,7 +1,5 @@
 package pt.lmen;
 
-import java.util.Arrays;
-
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.TokenStreamRewriter;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -35,8 +33,10 @@ public class ExpressionListener extends ChatBaseListener {
 	}
 
 	private boolean iskeyWord(String text) {
-		String[] keywords = { "null", "true", "false", "undefined", "while", "for" };
-		return Arrays.asList(keywords).contains(text);
+		return false;
+		// String[] keywords = { "null", "true", "false", "undefined", "while",
+		// "for" };
+		// return Arrays.asList(keywords).contains(text);
 	}
 
 }

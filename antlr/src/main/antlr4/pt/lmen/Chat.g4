@@ -20,6 +20,7 @@ singleExpression
  | singleExpression '&&' singleExpression                                 # LogicalAndExpression
  | singleExpression '||' singleExpression                                 # LogicalOrExpression
  | singleExpression '?' singleExpression ':' singleExpression             # TernaryExpression
+ | reservedWord															  # ReservedWordExpression // JUST REMOVES THE KEYWORKS TOKENS FROM THE IDENTIFIERS SCOPE 
  | propertyPath ( SUBPROP javaPath )?                					 # PropertyPathExpression
  | literal                                                                # LiteralExpression
  | '(' singleExpression ')'                                              # ParenthesizedExpression
@@ -93,6 +94,7 @@ keyword
  | Delete
  | In
  | Try
+ | Undefined
  ;
 
 futureReservedWord
@@ -235,6 +237,7 @@ Throw      : 'throw';
 Delete     : 'delete';
 In         : 'in';
 Try        : 'try';
+Undefined  : 'undefined';
 
 /// 7.6.1.2 Future Reserved Words
 Class   : 'class';

@@ -15,6 +15,8 @@ public class TestOne {
 	@Test
 	public void aa() {
 
+		assertTrans(" hjksd === undefined ", " _$_M('hjksd') === undefined ");
+		assertTrans(" hjksd === true ", " _$_M('hjksd') === true ");
 		assertTrans(" ghjg::substring('hjk', bnh) ", " _$_M('ghjg').substring('hjk', _$_M('bnh')) ");
 		assertTrans(" prop1.prop2::yu.jj[jk] ", " _$_M('prop1.prop2').yu.jj[_$_M('jk')] ");
 		assertTrans(" true ", " true ");
