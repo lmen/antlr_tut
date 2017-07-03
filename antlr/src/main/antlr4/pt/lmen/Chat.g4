@@ -22,7 +22,7 @@ singleExpression
  | singleExpression '?' singleExpression ':' singleExpression             # TernaryExpression
  | propertyPath ( SUBPROP javaPath )?                					 # PropertyPathExpression
  | literal                                                                # LiteralExpression
- | '(' singleExpression ')'                                             # ParenthesizedExpression
+ | '(' singleExpression ')'                                              # ParenthesizedExpression
  ;
 
 arguments
@@ -119,14 +119,7 @@ futureReservedWord
 // LEXER
 // =======
 
-SUBPROP :'::';
-
-IdentifierWithDot : 
-	//Identifier (TSEP  Identifier )*;
-	Identifier ('.'  Identifier )*;
-	
-TSEP :
-  '.' | '::';	
+SUBPROP :'::';		
 
 /// RegularExpressionLiteral ::
 ///     / RegularExpressionBody / RegularExpressionFlags
@@ -265,6 +258,9 @@ Static     : {strictMode}? 'static';
 Yield      : {strictMode}? 'yield';*/
 
 /// 7.6 Identifier Names and Identifiers
+IdentifierWithDot : 
+	Identifier ('.'  Identifier )*;
+	
 Identifier
  : IdentifierStart IdentifierPart*
  ;
