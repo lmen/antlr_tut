@@ -118,7 +118,7 @@ futureReservedWord
 
 
 // =======  
-// LEXER
+// LEXER rules start with an uppercase 
 // =======
 
 JavaSectionSeparator :'::';		
