@@ -1,6 +1,7 @@
 package pt.lmen;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
@@ -12,7 +13,7 @@ public class ExpressionTranslator {
 
 	public String translate(String expression) {
 
-		ANTLRInputStream input = new ANTLRInputStream(expression);
+		CharStream input = CharStreams.fromString(expression);
 
 		ExpressionLexer lexer = new ExpressionLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
